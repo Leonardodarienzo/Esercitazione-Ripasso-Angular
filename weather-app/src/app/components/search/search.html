@@ -1,0 +1,24 @@
+<section style="padding:1rem; max-width:700px; margin:auto;">
+  <h2>Ricerca città</h2>
+  <div style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+    <input [(ngModel)]="query" (keyup.enter)="onSearch()" placeholder="Es. Roma" />
+    <button (click)="onSearch()">Cerca</button>
+  </div>
+
+  <div *ngIf="loading">Caricamento…</div>
+  <div *ngIf="error" style="color:crimson">{{ error }}</div>
+
+  <ul *ngIf="suggestions.length" style="list-style:none; padding:0;">
+    <li *ngFor="let s of suggestions" style="margin-bottom:0.3rem;">
+      <button (click)="selectLocation(s.lat, s.lon)">{{ s.display_name }}</button>
+    </li>
+  </ul>
+
+  <div *ngIf="weather" style="margin-top:1rem; border-top:1px solid #ddd; padding-top:1rem;">
+    <h3>Meteo</h3>
+    <p><strong>Posizione</strong>: {{ weather.latitude }}, {{ weather.longitude }}</p>
+    <p><strong>Temperatura</strong>: {{ weather.current_weather.temperature }} °C</p>
+    <p><strong>Vento</strong>: {{ weather.current_weather.windspeed }} m/s</p>
+    <pre style="font-size:0.8rem;">{{ weather | json }}</pre>
+  </div>
+</section>
